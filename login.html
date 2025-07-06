@@ -1,0 +1,112 @@
+<!-- index.html (Login + Register Combined) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EIE Assistant - Auth</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="theme-toggle">
+    <label class="switch">
+      <input type="checkbox" id="themeToggle" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="login-card">
+    <h1>EIE Assistant</h1>
+    <p id="form-title">Login to continue</p>
+
+    <div id="login-form">
+      <label>Register Number</label>
+      <input type="text" id="loginRegNo" placeholder="E.g. 21EI1013" />
+
+      <label>Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter password" />
+
+      <button onclick="handleLogin()">Login</button>
+      <p class="footer-text">New user? <a href="#" onclick="switchToRegister()">Register here</a></p>
+    </div>
+
+    <div id="register-form" style="display: none;">
+      <label>Full Name</label>
+      <input type="text" id="regName" placeholder="Full name" />
+
+      <label>Register Number</label>
+      <input type="text" id="regRegNo" placeholder="E.g. 21EI1042" />
+
+      <label>Password</label>
+      <input type="password" id="regPassword" placeholder="Create a password" />
+
+      <button onclick="handleRegister()">Register</button>
+      <p class="footer-text">Already registered? <a href="#" onclick="switchToLogin()">Login here</a></p>
+    </div>
+  </div>
+
+  <script>
+    const ownerReg = "21EI1013";
+    const adminList = ["21EI1001", "21EI1002"];
+
+    function handleLogin() {
+      const regNo = document.getElementById("loginRegNo").value.trim();
+      const password = document.getElementById("loginPassword").value;
+      const users = JSON.parse(localStorage.getItem("eieUsers") || "[]");
+      const user = users.find(u => u.regNo === regNo && u.password === password);
+
+      if (!user) return alert("Invalid credentials.");
+
+      let role = "student";
+      if (regNo === ownerReg) role = "owner";
+      else if (adminList.includes(regNo)) role = "admin";
+
+      localStorage.setItem("eieUser", JSON.stringify({ name: user.name, regNo, role }));
+      window.location.href = "home.html";
+    }
+
+    function handleRegister() {
+      const name = document.getElementById("regName").value.trim();
+      const regNo = document.getElementById("regRegNo").value.trim();
+      const password = document.getElementById("regPassword").value;
+      if (!name || !regNo || !password) return alert("Fill all fields.");
+
+      let users = JSON.parse(localStorage.getItem("eieUsers") || "[]");
+      if (users.find(u => u.regNo === regNo)) return alert("User already exists.");
+
+      users.push({ name, regNo, password });
+      localStorage.setItem("eieUsers", JSON.stringify(users));
+      alert("Registered successfully! Now login.");
+      switchToLogin();
+    }
+
+    function switchToRegister() {
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("register-form").style.display = "block";
+      document.getElementById("form-title").innerText = "Register as a new user";
+    }
+
+    function switchToLogin() {
+      document.getElementById("register-form").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+      document.getElementById("form-title").innerText = "Login to continue";
+    }
+
+    const themeToggle = document.getElementById('themeToggle');
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme === 'dark') {
+      document.body.classList.add('dark');
+      themeToggle.checked = true;
+    }
+    themeToggle.addEventListener('change', () => {
+      if (themeToggle.checked) {
+        document.body.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.body.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  </script>
+</body>
+</html>

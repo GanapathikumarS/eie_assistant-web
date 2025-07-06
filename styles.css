@@ -1,0 +1,115 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #f1f9ff, #d6e0ff);
+  color: #333;
+  transition: all 0.3s;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body.dark {
+  background: linear-gradient(to right, #1a1a1a, #2a2a2a);
+  color: #f0f0f0;
+}
+.login-card {
+  max-width: 400px;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(75, 71, 71, 0.15);
+  text-align: center;
+}
+body.dark .login-card {
+  background: #2a2a2a;
+}
+input {
+  width: 100%;
+  padding: 14px;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid #bbb;
+  font-size: 1rem;
+  background: #f9f9f9;
+}
+body.dark input {
+  background: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+button {
+  width: 100%;
+  padding: 14px;
+  background: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+button:hover {
+  background: #94d3f0;
+}
+.footer-text {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+.subtitle {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 24px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #1d4ed8;
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  text-align: left;
+  color: inherit;
+}
