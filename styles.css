@@ -172,3 +172,129 @@ body.dark button:hover {
 body.dark .footer-text a {
   color: #ff4b4b;
 }
+
+/* Top Right Controls */
+.top-controls {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 100;
+}
+
+/* Logout Button */
+.logout-btn {
+  padding: 8px 16px;
+  background-color: #ff1e1e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c90000;
+}
+
+body.dark .logout-btn {
+  background-color: #ff1e1e;
+}
+
+body.dark .logout-btn:hover {
+  background-color: #cc0000;
+}
+
+/* Batch Container */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.batch-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Batch Card Design */
+.batch-card {
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  padding: 1rem;
+  min-width: 160px;
+  text-align: center;
+  color: #222;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.batch-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #00cfff;
+}
+
+.batch-card button {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #00cfff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.batch-card button:hover {
+  background-color: #ff1e1e;
+}
+
+/* Dark Theme Support for Batch Cards */
+body.dark .batch-card {
+  background-color: #1c1c1c;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 30, 30, 0.2);
+}
+
+body.dark .batch-card h3 {
+  color: #00cfff;
+}
+
+body.dark .batch-card button {
+  background-color: #00cfff;
+}
+
+body.dark .batch-card button:hover {
+  background-color: #ff1e1e;
+}
+/* Delete button (owner only) */
+.delete-btn {
+  margin-top: 8px;
+  background-color: #f44336;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  width: auto;
+  display: inline-block;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
+}
+
+body.dark .delete-btn {
+  background-color: #f44336;
+}
+
+body.dark .delete-btn:hover {
+  background-color: #e53935;
+}

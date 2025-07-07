@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EIE Assistant - Home</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Top Controls -->
+  <div class="top-controls">
+    <div class="theme-toggle">
+      <label class="switch">
+        <input type="checkbox" id="themeToggleHome" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <button onclick="logout()" class="logout-btn">🚪 Logout</button>
+  </div>
+
+  <div class="container">
+    <h1 class="title">📚 EIE Assistant</h1>
+    <p id="welcomeText"></p>
+
+    <!-- Batches -->
+    <div id="batchContainer" class="batch-container"></div>
+
+    <!-- Add Batch -->
+    <div id="addBatchSection" style="display: none;">
+      <input type="text" id="newBatchInput" placeholder="Enter new batch (e.g. 2027–2031)" />
+      <button onclick="addBatch()">➕ Add Batch</button>
+    </div>
+  </div>
+
+  <script>
+    const defaultBatches = ["2021–2025", "2022–2026", "2023–2027", "2024–2028", "2025–2029", "2026–2030"];
+    const user = JSON.parse(localStorage.getItem("eieUser"));
+    const batchContainer = document.getElementById("batchContainer");
+    const welcomeText = document.getElementById("welcomeText");
+
+    if (!user) {
+      alert("Not logged in.");
+      window.location.href = "login.html";
+    }
+
+    const isOwner = user.regNo.toLowerCase() === "21ei1013";
+    welcomeText.innerHTML = `👤 Welcome <b>${user.name}</b> (${user.role.toUpperCase()})`;
+
+    function displayBatches(batches) {
+  batchContainer.innerHTML = "";
+  batches.forEach((batch, index) => {
+    const div = document.createElement("div");
+    div.className = "batch-card";
+
+    // Batch card content
+    let content = `<h3>${batch}</h3>
+                   <button onclick="viewBatch('${batch}')">📁 View</button>`;
+
+    // Add delete button only for Owner
+    if (isOwner) {
+      content += `<br><button class="delete-btn" onclick="deleteBatch(${index})">🗑️ Delete</button>`;
+    }
+
+    div.innerHTML = content;
+    batchContainer.appendChild(div);
+  });
+}
+
+
+    displayBatches(defaultBatches);
+
+    if (isOwner) {
+      document.getElementById("addBatchSection").style.display = "block";
+    }
+
+    function addBatch() {
+      const batch = document.getElementById("newBatchInput").value.trim();
+      if (!batch) return alert("Enter batch like 2027–2031");
+      if (defaultBatches.includes(batch)) return alert("Batch already exists.");
+      defaultBatches.push(batch);
+      displayBatches(defaultBatches);
+      document.getElementById("newBatchInput").value = "";
+    }
+
+    function viewBatch(batch) {
+  alert("Opening " + batch); // Replace with real navigation if needed
+}
+
+function deleteBatch(index) {
+  if (confirm("Are you sure you want to delete this batch?")) {
+    defaultBatches.splice(index, 1);
+    displayBatches(defaultBatches);
+  }
+}
+
+
+    function logout() {
+      localStorage.removeItem("eieUser");
+      window.location.href = "login.html";
+    }
+
+    const themeToggle = document.getElementById("themeToggleHome");
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "dark") {
+      document.body.classList.add("dark");
+      themeToggle.checked = true;
+    }
+
+    themeToggle.addEventListener("change", () => {
+      if (themeToggle.checked) {
+        document.body.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      } else {
+        document.body.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+      }
+    });
+  </script>
+</body>
+</html>
