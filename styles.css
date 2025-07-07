@@ -1,115 +1,174 @@
+/* Reset */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #f1f9ff, #d6e0ff);
-  color: #333;
-  transition: all 0.3s;
-  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #ffffff;
+  color: #222;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
-body.dark {
-  background: linear-gradient(to right, #1a1a1a, #2a2a2a);
-  color: #f0f0f0;
-}
+
+/* Cards */
 .login-card {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
   max-width: 400px;
-  background: white;
-  padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(75, 71, 71, 0.15);
+  box-sizing: border-box;
   text-align: center;
 }
-body.dark .login-card {
-  background: #2a2a2a;
+
+/* Headings */
+h1 {
+  margin-top: 0;
+  font-size: 26px;
+  color: #00cfff; /* Logo Blue */
 }
+
+/* Labels & Inputs */
+label {
+  display: block;
+  text-align: left;
+  margin: 16px 0 6px;
+  font-weight: 600;
+  color: #00cfff;
+}
+
 input {
   width: 100%;
-  padding: 14px;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  border-radius: 10px;
-  border: 1px solid #bbb;
-  font-size: 1rem;
-  background: #f9f9f9;
+  padding: 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
-body.dark input {
-  background: #444;
-  color: #fff;
-  border: 1px solid #666;
-}
+
+/* Buttons */
 button {
   width: 100%;
-  padding: 14px;
-  background: #1d4ed8;
+  padding: 12px;
+  background-color: #ff1e1e; /* Red from logo */
   color: white;
+  font-size: 16px;
   border: none;
-  border-radius: 10px;
-  font-size: 1rem;
+  border-radius: 8px;
+  margin-top: 20px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.2s ease;
 }
+
 button:hover {
-  background: #94d3f0;
+  background-color: #c90000;
 }
+
+/* Footer */
 .footer-text {
-  font-size: 0.9rem;
-  margin-top: 1rem;
+  font-size: 14px;
+  margin-top: 12px;
 }
-.subtitle {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  color: #666;
+
+.footer-text a {
+  color: #ff1e1e;
+  text-decoration: none;
+  font-weight: bold;
 }
+
+.footer-text a:hover {
+  text-decoration: underline;
+}
+
+/* Theme toggle switch */
 .theme-toggle {
   position: absolute;
-  top: 20px;
+  top: 16px;
   right: 20px;
 }
+
 .switch {
   position: relative;
   display: inline-block;
   width: 50px;
-  height: 24px;
+  height: 28px;
 }
+
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 .slider {
   position: absolute;
-  cursor: pointer;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
   background-color: #ccc;
-  border-radius: 24px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition: .4s;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: 0.3s;
 }
+
 .slider:before {
-  position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
-  border-radius: 50%;
-  left: 3px;
-  bottom: 3px;
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
   background-color: white;
-  transition: .4s;
+  transition: 0.3s;
+  border-radius: 50%;
 }
+
 input:checked + .slider {
-  background-color: #1d4ed8;
+  background-color: #00cfff; /* logo blue */
 }
+
 input:checked + .slider:before {
-  transform: translateX(26px);
+  transform: translateX(22px);
 }
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  text-align: left;
-  color: inherit;
+
+/* OTP Section */
+#otpSection {
+  margin-top: 20px;
+}
+
+/* Dark Mode Overrides */
+body.dark {
+  background-color: #000000;
+  color: #f0f0f0;
+}
+
+body.dark .login-card {
+  background-color: #111;
+  color: #f0f0f0;
+  box-shadow: 0 6px 20px rgba(255, 30, 30, 0.2);
+}
+
+body.dark h1,
+body.dark label {
+  color: #00cfff;
+}
+
+body.dark input {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border: 1px solid #444;
+}
+
+body.dark button {
+  background-color: #ff1e1e;
+  color: white;
+}
+
+body.dark button:hover {
+  background-color: #cc0000;
+}
+
+body.dark .footer-text a {
+  color: #ff4b4b;
 }

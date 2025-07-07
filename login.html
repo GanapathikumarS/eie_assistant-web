@@ -1,105 +1,184 @@
-<!-- index.html (Login + Register Combined) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EIE Assistant - Auth</title>
+  <title>EIE Assistant - Login</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Firebase Compatibility SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 </head>
 <body>
   <div class="theme-toggle">
     <label class="switch">
-      <input type="checkbox" id="themeToggle" />
+      <input type="checkbox" id="themeSwitch" />
       <span class="slider"></span>
     </label>
   </div>
 
-  <div class="login-card">
+  <div class="login-card" id="loginCard">
     <h1>EIE Assistant</h1>
-    <p id="form-title">Login to continue</p>
+    <p>Login to continue</p>
+    <label for="regNoLogin">Register Number</label>
+    <input type="text" id="regNoLogin" placeholder="E.g. 21EI1013" />
+    <label for="passwordLogin">Password</label>
+    <input type="password" id="passwordLogin" placeholder="Enter password" />
+    <button onclick="handleLogin()">Login</button>
+    <p class="footer-text">New user? <a href="#" onclick="showRegister()">Register here</a></p>
+    <p class="footer-text"><a href="#" onclick="showForgot()">Forgot Password?</a></p>
+  </div>
 
-    <div id="login-form">
-      <label>Register Number</label>
-      <input type="text" id="loginRegNo" placeholder="E.g. 21EI1013" />
+  <div class="login-card" style="display:none" id="registerCard">
+    <h1>Register</h1>
+    <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="Full name" />
+    <label for="regNo">Register Number</label>
+    <input type="text" id="regNo" placeholder="E.g. 21EI1042" />
+    <label for="email">Email Address</label>
+    <input type="email" id="email" placeholder="example@email.com" />
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Create a password" />
+    <button onclick="handleRegister()">Register</button>
+    <p class="footer-text">Already registered? <a href="#" onclick="showLogin()">Login here</a></p>
+  </div>
 
-      <label>Password</label>
-      <input type="password" id="loginPassword" placeholder="Enter password" />
-
-      <button onclick="handleLogin()">Login</button>
-      <p class="footer-text">New user? <a href="#" onclick="switchToRegister()">Register here</a></p>
+  <div class="login-card" style="display:none" id="forgotCard">
+    <h1>Forgot Password</h1>
+    <label for="forgotEmail">Enter your Email</label>
+    <input type="email" id="forgotEmail" placeholder="Registered Email" />
+    <button onclick="sendOTP()">Send OTP</button>
+    <div id="otpSection" style="display:none;">
+      <label for="otpInput">Enter OTP</label>
+      <input type="text" id="otpInput" placeholder="Enter the OTP" />
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" placeholder="New password" />
+      <button onclick="verifyOTPAndReset()">Reset Password</button>
     </div>
-
-    <div id="register-form" style="display: none;">
-      <label>Full Name</label>
-      <input type="text" id="regName" placeholder="Full name" />
-
-      <label>Register Number</label>
-      <input type="text" id="regRegNo" placeholder="E.g. 21EI1042" />
-
-      <label>Password</label>
-      <input type="password" id="regPassword" placeholder="Create a password" />
-
-      <button onclick="handleRegister()">Register</button>
-      <p class="footer-text">Already registered? <a href="#" onclick="switchToLogin()">Login here</a></p>
-    </div>
+    <p class="footer-text"><a href="#" onclick="showLogin()">Back to Login</a></p>
   </div>
 
   <script>
+    // Firebase Init
+    const firebaseConfig = {
+      apiKey: "AIzaSyBZ4DCKzy5cQ7vo7Bita3IdjePCaVgpMAE",
+      authDomain: "eie-assistant-a2540.firebaseapp.com",
+      projectId: "eie-assistant-a2540",
+      storageBucket: "eie-assistant-a2540.firebasestorage.app",
+      messagingSenderId: "567170415509",
+      appId: "1:567170415509:web:f8f8d4f168cd4bbcd0549c",
+      measurementId: "G-DRQPKVFTMC"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // EmailJS Init
+    emailjs.init("3nFMAYekybnDKWtGZ");
+
     const ownerReg = "21EI1013";
     const adminList = ["21EI1001", "21EI1002"];
 
     function handleLogin() {
-      const regNo = document.getElementById("loginRegNo").value.trim();
-      const password = document.getElementById("loginPassword").value;
-      const users = JSON.parse(localStorage.getItem("eieUsers") || "[]");
-      const user = users.find(u => u.regNo === regNo && u.password === password);
-
-      if (!user) return alert("Invalid credentials.");
-
-      let role = "student";
-      if (regNo === ownerReg) role = "owner";
-      else if (adminList.includes(regNo)) role = "admin";
-
-      localStorage.setItem("eieUser", JSON.stringify({ name: user.name, regNo, role }));
-      window.location.href = "home.html";
+      const regNo = document.getElementById("regNoLogin").value.trim();
+      const password = document.getElementById("passwordLogin").value;
+      db.collection("users").doc(regNo).get().then(doc => {
+        if (!doc.exists || doc.data().password !== password) return alert("Invalid credentials.");
+        const user = doc.data();
+        localStorage.setItem("eieUser", JSON.stringify({ name: user.name, regNo: user.regNo, role: user.role }));
+        window.location.href = "home.html";
+      });
     }
 
     function handleRegister() {
-      const name = document.getElementById("regName").value.trim();
-      const regNo = document.getElementById("regRegNo").value.trim();
-      const password = document.getElementById("regPassword").value;
-      if (!name || !regNo || !password) return alert("Fill all fields.");
-
-      let users = JSON.parse(localStorage.getItem("eieUsers") || "[]");
-      if (users.find(u => u.regNo === regNo)) return alert("User already exists.");
-
-      users.push({ name, regNo, password });
-      localStorage.setItem("eieUsers", JSON.stringify(users));
-      alert("Registered successfully! Now login.");
-      switchToLogin();
+      const name = document.getElementById("name").value.trim();
+      const regNo = document.getElementById("regNo").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      if (!name || !regNo || !email || !password) return alert("Fill all fields.");
+      db.collection("users").doc(regNo).get().then(doc => {
+        if (doc.exists) return alert("User already exists.");
+        const role = regNo === ownerReg ? "owner" : (adminList.includes(regNo) ? "admin" : "student");
+        db.collection("users").doc(regNo).set({ name, regNo, email, password, role }).then(() => {
+          alert("Registered successfully.");
+          showLogin();
+        });
+      });
     }
 
-    function switchToRegister() {
-      document.getElementById("login-form").style.display = "none";
-      document.getElementById("register-form").style.display = "block";
-      document.getElementById("form-title").innerText = "Register as a new user";
+    // OTP Handling
+    let generatedOTP = null;
+    let resetEmail = null;
+
+  function sendOTP() {
+  resetEmail = document.getElementById("forgotEmail").value.trim();
+  if (!resetEmail) return alert("Enter your registered email.");
+
+  generatedOTP = Math.floor(100000 + Math.random() * 900000);
+
+  const templateParams = {
+    email: resetEmail,     // 🛑 Replace this with the actual variable name from your EmailJS template
+    passcode: generatedOTP         // 🛑 Same here
+  };
+
+  emailjs.send("service_eie_assistant", "template_s0v44tl", templateParams)
+    .then((response) => {
+      console.log("SUCCESS!", response.status, response.text);
+      alert("OTP sent to your email.");
+      document.getElementById("otpSection").style.display = "block";
+    }, (error) => {
+      console.error("FAILED...", error);
+      alert("Failed to send OTP. Check your EmailJS keys and template fields.");
+    });
+}
+
+
+    function verifyOTPAndReset() {
+      const userOTP = document.getElementById("otpInput").value.trim();
+      const newPassword = document.getElementById("newPassword").value.trim();
+      if (userOTP == generatedOTP && newPassword) {
+        db.collection("users").where("email", "==", resetEmail).get().then(snapshot => {
+          if (snapshot.empty) return alert("User not found");
+          snapshot.forEach(doc => {
+            db.collection("users").doc(doc.id).update({ password: newPassword });
+            alert("Password updated successfully.");
+            showLogin();
+          });
+        });
+      } else {
+        alert("Invalid OTP or password");
+      }
     }
 
-    function switchToLogin() {
-      document.getElementById("register-form").style.display = "none";
-      document.getElementById("login-form").style.display = "block";
-      document.getElementById("form-title").innerText = "Login to continue";
+    function showRegister() {
+      document.getElementById("loginCard").style.display = "none";
+      document.getElementById("registerCard").style.display = "block";
+      document.getElementById("forgotCard").style.display = "none";
     }
 
-    const themeToggle = document.getElementById('themeToggle');
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme === 'dark') {
+    function showLogin() {
+      document.getElementById("loginCard").style.display = "block";
+      document.getElementById("registerCard").style.display = "none";
+      document.getElementById("forgotCard").style.display = "none";
+    }
+
+    function showForgot() {
+      document.getElementById("loginCard").style.display = "none";
+      document.getElementById("registerCard").style.display = "none";
+      document.getElementById("forgotCard").style.display = "block";
+    }
+
+    // Theme toggle
+    const themeSwitch = document.getElementById('themeSwitch');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
       document.body.classList.add('dark');
-      themeToggle.checked = true;
+      themeSwitch.checked = true;
     }
-    themeToggle.addEventListener('change', () => {
-      if (themeToggle.checked) {
+    themeSwitch.addEventListener('change', () => {
+      if (themeSwitch.checked) {
         document.body.classList.add('dark');
         localStorage.setItem('theme', 'dark');
       } else {
