@@ -7,15 +7,26 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Top Controls -->
-  <div class="top-controls">
-    <div class="theme-toggle">
-      <label class="switch">
-        <input type="checkbox" id="themeToggleHome" />
-        <span class="slider"></span>
-      </label>
+  <!-- Sidebar Toggle Button -->
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  <!-- Top-right Theme Toggle -->
+  <div class="theme-toggle">
+    <label class="switch">
+      <input type="checkbox" id="themeToggleHome" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- Sidebar Menu -->
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-content">
+      <!-- Optional content like nav items or user info -->
+
+      <div class="sidebar-spacer"></div> <!-- Spacer to push logout down -->
+
+      <button onclick="logout()" class="logout-btn">🚪 Logout</button>
     </div>
-    <button onclick="logout()" class="logout-btn">🚪 Logout</button>
   </div>
 
   <div class="container">
@@ -47,25 +58,19 @@
     welcomeText.innerHTML = `👤 Welcome <b>${user.name}</b> (${user.role.toUpperCase()})`;
 
     function displayBatches(batches) {
-  batchContainer.innerHTML = "";
-  batches.forEach((batch, index) => {
-    const div = document.createElement("div");
-    div.className = "batch-card";
-
-    // Batch card content
-    let content = `<h3>${batch}</h3>
-                   <button onclick="viewBatch('${batch}')">📁 View</button>`;
-
-    // Add delete button only for Owner
-    if (isOwner) {
-      content += `<br><button class="delete-btn" onclick="deleteBatch(${index})">🗑️ Delete</button>`;
+      batchContainer.innerHTML = "";
+      batches.forEach((batch, index) => {
+        const div = document.createElement("div");
+        div.className = "batch-card";
+        let content = `<h3>${batch}</h3>
+                       <button onclick="viewBatch('${batch}')">📁 View</button>`;
+        if (isOwner) {
+          content += `<br><button class="delete-btn" onclick="deleteBatch(${index})">🗑️ Delete</button>`;
+        }
+        div.innerHTML = content;
+        batchContainer.appendChild(div);
+      });
     }
-
-    div.innerHTML = content;
-    batchContainer.appendChild(div);
-  });
-}
-
 
     displayBatches(defaultBatches);
 
@@ -82,17 +87,16 @@
       document.getElementById("newBatchInput").value = "";
     }
 
+    function deleteBatch(index) {
+      if (confirm("Are you sure you want to delete this batch?")) {
+        defaultBatches.splice(index, 1);
+        displayBatches(defaultBatches);
+      }
+    }
+
     function viewBatch(batch) {
-  alert("Opening " + batch); // Replace with real navigation if needed
-}
-
-function deleteBatch(index) {
-  if (confirm("Are you sure you want to delete this batch?")) {
-    defaultBatches.splice(index, 1);
-    displayBatches(defaultBatches);
-  }
-}
-
+      alert("Opening " + batch);
+    }
 
     function logout() {
       localStorage.removeItem("eieUser");
@@ -115,6 +119,10 @@ function deleteBatch(index) {
         localStorage.setItem("theme", "light");
       }
     });
+
+    function toggleMenu() {
+      document.getElementById("sidebar").classList.toggle("open");
+    }
   </script>
 </body>
 </html>

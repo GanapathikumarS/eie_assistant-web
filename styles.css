@@ -298,3 +298,212 @@ body.dark .delete-btn {
 body.dark .delete-btn:hover {
   background-color: #e53935;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Sidebar Menu */
+.menu-toggle {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #00cfff;
+  z-index: 10;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 220px;
+  height: 100%;
+  background-color: #f9f9f9;
+  border-right: 2px solid #ccc;
+  padding: 20px;
+  transition: left 0.3s ease;
+  z-index: 9;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar .logout-btn {
+  background-color: #ff1e1e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sidebar .logout-btn:hover {
+  background-color: #c90000;
+}
+
+.theme-label {
+  font-size: 14px;
+  margin-left: 6px;
+  color: #00cfff;
+}
+
+/* Batch Card Buttons */
+.batch-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: #222;
+  width: 180px;
+}
+
+.batch-card button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #00cfff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.batch-card .delete-btn {
+  background-color: #ff1e1e;
+  margin-top: 5px;
+}
+
+.batch-card .delete-btn:hover {
+  background-color: #c90000;
+}
+
+/* Dark Theme Support for Sidebar */
+body.dark .sidebar {
+  background-color: #111;
+  border-color: #333;
+}
+
+body.dark .sidebar .logout-btn {
+  background-color: #ff1e1e;
+}
+
+body.dark .sidebar .logout-btn:hover {
+  background-color: #cc0000;
+}
+
+body.dark .theme-label {
+  color: #00cfff;
+}
+
+body.dark .batch-card {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+
+
+
+
+
+/* === Added: Sidebar Menu Toggle === */
+.menu-toggle {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #00cfff;
+  z-index: 10;
+}
+
+/* === Added: Sidebar === */
+.sidebar {
+  position: bottom;
+  top: 40;
+  left: -250px;
+  width: 220px;
+  height: 100%;
+  background-color: #f9f9f9;
+  border-right: 2px solid #ccc;
+  padding: 20px;
+  transition: left 0.3s ease;
+  z-index: 9;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar .logout-btn {
+  background-color: #ff1e1e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sidebar .logout-btn:hover {
+  background-color: #f7f0f0;
+}
+
+/* === Added: Dark Theme Support for Sidebar === */
+body.dark .sidebar {
+  background-color: #111;
+  border-color: #333;
+}
+
+body.dark .sidebar .logout-btn {
+  background-color: #ff1e1e;
+}
+
+body.dark .sidebar .logout-btn:hover {
+  background-color: #cc0000;
+}
+
+/* === Added: Optional Label for Toggle (if you use it) === */
+.theme-label {
+  font-size: 14px;
+  margin-left: 6px;
+  color: #00cfff;
+}
+
+body.dark .theme-label {
+  color: #00cfff;
+}
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 95%;
+}
+
+/* Spacer pushes logout button to bottom */
+.sidebar-spacer {
+  flex: 40;
+}
