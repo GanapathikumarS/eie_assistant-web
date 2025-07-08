@@ -149,7 +149,10 @@ body.dark .login-card {
   box-shadow: 0 6px 20px rgba(255, 30, 30, 0.2);
 }
 
-body.dark h1,
+body.dark h1.{
+  color:#00cfff;
+}
+
 body.dark label {
   color: #ff1e1e;
 }
