@@ -125,7 +125,7 @@ button:hover {
 }
 
 input:checked + .slider {
-  background-color: #00cfff; /* logo blue */
+  background-color: #ff1e1e; /* logo red */
 }
 
 input:checked + .slider:before {
@@ -173,7 +173,7 @@ body.dark button:hover {
 }
 
 body.dark .footer-text a {
-  color: #ff4b4b;
+  color: #00cfff;
 }
 
 /* Top Right Controls */
