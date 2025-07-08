@@ -27,7 +27,7 @@ body {
 h1 {
   margin-top: 0;
   font-size: 26px;
-  color: #ff1e1e /*#00cfff; /* Logo Blue */
+  color: #00cfff; /* Logo Blue */
 }
 
 /* Labels & Inputs */
@@ -149,12 +149,9 @@ body.dark .login-card {
   box-shadow: 0 6px 20px rgba(255, 30, 30, 0.2);
 }
 
-body.dark h1.{
-  color:#00cfff;
-}
-
+body.dark h1,
 body.dark label {
-  color: #ff1e1e;
+  color: #00cfff;
 }
 
 body.dark input {
@@ -295,7 +292,7 @@ body.dark .batch-card button:hover {
 }
 
 body.dark .delete-btn {
-  background-color:#ff1e1e  /*#f44336;*/
+  background-color: #f44336;
 }
 
 body.dark .delete-btn:hover {
@@ -365,7 +362,7 @@ body.dark .delete-btn:hover {
 .theme-label {
   font-size: 14px;
   margin-left: 6px;
-  color: #ff1e1e;
+  color: #00cfff;
 }
 
 /* Batch Card Buttons */
@@ -421,11 +418,6 @@ body.dark .batch-card {
   background-color: #1e1e1e;
   color: #f0f0f0;
 }
-
-
-
-
-
 
 /* === Added: Sidebar Menu Toggle === */
 .menu-toggle {
