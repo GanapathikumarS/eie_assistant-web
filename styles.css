@@ -292,7 +292,7 @@ body.dark .batch-card button:hover {
 }
 
 body.dark .delete-btn {
-  background-color: #f44336;
+  background-color:#ff1e1e  /*#f44336;*/
 }
 
 body.dark .delete-btn:hover {
